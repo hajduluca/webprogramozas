@@ -79,7 +79,6 @@ function draw(){
     columns.forEach(columns => ctx.drawImage(images.columns, columns.x, columns.y, columns.width, columns.height))
 
     if(gameState){
-        dye.play();
         ctx.fillStyle = 'red'
         ctx.font = '100px serif'
         ctx.fillText('GAME OVER', 10, 200)
