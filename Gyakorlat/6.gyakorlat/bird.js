@@ -15,6 +15,7 @@ const GAP = 150
 const COLUMN_DISTANCE = 300     //oszlopok közötti távolság
 const COLUMN_VELOCITY = -200        //200-al (sebesség) közeledjenek az oszlopok
 
+let score = 0;
 let gameState = 0   //játékban vagyunk
 
 const images = {
@@ -78,10 +79,15 @@ function draw(){
     columns.forEach(columns => ctx.drawImage(images.columns, columns.x, columns.y, columns.width, columns.height))
 
     if(gameState){
+        dye.play();
         ctx.fillStyle = 'red'
         ctx.font = '100px serif'
         ctx.fillText('GAME OVER', 10, 200)
     }
+
+    ctx.fillStyle = "#000";  
+    ctx.font = "20px Verdana";  
+    ctx.fillText("Score : "+score,10,canvas.height-20);  
 
 }
 
@@ -104,7 +110,9 @@ function update(dt){
     columns.forEach(columns =>{ 
         columns.x += COLUMN_VELOCITY * dt
         if(isCollided(bird, columns)){
-            gameState = 1
+            gameState = 1;
+        }else{
+            score++;
         }
     })
 }
@@ -123,9 +131,18 @@ function gameLoop(now = performance.now()){
     }
 }
 
+//audio
+var fly = new Audio();
+var dye = new Audio();
+
+fly.src = "fly.mp3";
+dye.src = "dye.mp3";
+
+
 //EVENT
 document.addEventListener('keydown', (e)=>{
-    bird.vy = -300;
+    bird.vy = -100;
+    fly.play();
 })
 
 //START
